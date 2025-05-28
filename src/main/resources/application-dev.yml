@@ -1,0 +1,62 @@
+#
+server:
+  port: 8099
+  http2:
+    enabled: true
+  tomcat:
+    keep-alive-timeout: -1
+#
+this-app:
+  nacos-sc-addr: 127.0.0.1:8848
+  nacos-dubbo-addr: nacos://127.0.0.1:8848:8848?namingPushEmptyProtection=true&namingLoadCacheAtStart=false
+#
+spring:
+  cloud:
+    inetutils:
+      preferred-networks:
+        - 192.168.9
+        - 192.168.1
+        - 192.168.0
+        - 10.1.1
+      ignored-interfaces:
+        - VirtualBox.*
+        - vmnet.*
+        - docker.*
+#
+dubbo:
+  application:
+    name: ${spring.application.name}-dubbo
+    logger: slf4j
+    serialize-check-status: DISABLE
+    check-serializable: false
+    qos-enable: false
+    qos-port: -1
+  protocol:
+    host: ~
+    triple:
+      verbose: true
+      servlet:
+        enabled: true
+  protocols:
+    tri:
+      name: tri
+      port: ${server.port}
+    dubbo:
+      name: dubbo
+      port: -1
+  provider:
+    retries: 0
+    timeout: 50000
+  consumer:
+    check: false
+    timeout: 50000
+  registry:
+    address: ${spring.cloud.dubbo-rmc-addr}
+  metadata-report:
+    address: ${spring.cloud.dubbo-rmc-addr}
+  config-center:
+    address: ${spring.cloud.dubbo-rmc-addr}
+  scan:
+    base-packages: com.poazy.dubbo.rest.demo
+
+

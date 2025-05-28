@@ -1,0 +1,38 @@
+this-app:
+  api-version: ~
+  api-group: ~
+spring:
+  profiles:
+    active: dev
+    include: nacos
+  application:
+    name: dubbo-rest-demo
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import:
+      - optional:classpath:application-${spring.profiles.active}.yml
+      - optional:nacos:${spring.application.name}.yml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?group=DEFAULT_GROUP&refreshEnabled=true
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  # Spring Cloud
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        register-enabled: true
+        server-addr: ${this-app.nacos-sc-addr}
+        namingPushEmptyProtection: true
+        namingLoadCacheAtStart: false
+        ip: ${DAFROW_IP_TO_REGISTRY:}
+        metadata:
+          version: ${this-app.api-version}
+          group: ${this-app.api-group}
+      config:
+        enabled: true
+        server-addr: ${this-app.nacos-sc-addr}
+        file-extension: yml
+        timeout: 5000
+    dubbo-rmc-addr: ${this-app.nacos-dubbo-addr}

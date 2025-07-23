@@ -1,6 +1,6 @@
 ### 偶发性出现异常
 ### Name for argument of type [class com.poazy.dubbo.rest.demo.api.entity.DrdRQ] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the -parameters flag
-POST http://127.0.0.1:8099/com.poazy.dubbo.rest.demo.api.RestDemoService/queryPrice
+POST http://localhost.proxyman.io:8099/com.poazy.dubbo.rest.demo.api.RestDemoService/queryPrice
 Content-Type: application/json
 
 { "data": 123456 }
